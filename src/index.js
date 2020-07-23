@@ -14,6 +14,14 @@ function entry(api, projectOptions) {
   api.chainWebpack(chain(api, projectOptions));
 }
 
+const minify = {
+  collapseBooleanAttributes: true,
+  collapseWhitespace: true,
+  decodeEntities: true,
+  keepClosingSlash: true,
+  sortAttributes: true
+};
+
 function chain(api, projectOptions) {
   return config => {
     const options = createPluginOptions(api, projectOptions);
@@ -26,6 +34,7 @@ function chain(api, projectOptions) {
     const prerenderOptions = {
       ...paths,
       routes: options.renderRoutes,
+      minify: minify,
       renderer,
       postProcess: renderedRoute => {
         const route = renderedRoute.route;
